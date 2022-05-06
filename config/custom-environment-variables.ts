@@ -11,5 +11,8 @@ export default {
     smtp_email: 'SMTP_EMAIL',
     smtp_password: 'SMTP_PASSWORD',
     from_email:  'FROM_EMAIL',
-    from_name:'FROM_NAME'
+    from_name:'FROM_NAME',
+    file_upload_path:'FILE_UPLOAD_PATH',
+    max_file_upload: 'MAX_FILE_UPLOAD'
+
 }
