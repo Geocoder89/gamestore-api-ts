@@ -69,11 +69,9 @@ const GamesSchema:Schema = new Schema(
   
   
   );
-  
-
-  // module.exports = mongoose.model("Games", gameSchema);
 
 
-  const Games = mongoose.model<GameDocument>('Games',GamesSchema);
+
+  const Games = model<GameDocument>('Games',GamesSchema);
 
   export default Games;

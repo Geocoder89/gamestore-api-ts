@@ -26,7 +26,7 @@ export interface GamestoreDocument extends Document {
     updatedAt: Date;
     categories: string[];
 }
-const GamestoreSchema = new Schema(
+const GamestoreSchema:Schema = new Schema(
   {
     name: {
       type: String,
