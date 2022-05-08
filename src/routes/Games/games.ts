@@ -8,14 +8,20 @@ const gamesRouter = express.Router({
 })
 
 import {protectRoute,authorize} from '../../middleware/auth'
-import { createGame } from '../../controllers/games'
+import { createGame, getGame, getGames, updateGame } from '../../controllers/games'
 
 
 gamesRouter.get('/',advancedResults(Games,{
     path: 'gamestore',
     select: 'name description'
-}))
+}),getGames)
 
 gamesRouter.post('/',protectRoute,authorize("publisher","admin"),createGame)
+
+gamesRouter.get('/:id',getGame)
+
+gamesRouter.put("/:id",protectRoute,authorize("publisher","admin"),updateGame)
+
+gamesRouter.delete("/:id",protectRoute,authorize("publisher","admin"),updateGame)
 
 export default gamesRouter

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+
 import {model,Schema,Document} from 'mongoose'
 
 
@@ -14,6 +14,7 @@ export interface GameDocument extends Document {
     minimumSkill: string;
     gamestore: GamestoreDocument['_id'];
     moneyBackGuarantee: boolean;
+  
 }
 
 
@@ -70,6 +71,56 @@ const GamesSchema:Schema = new Schema(
   
   );
 
+
+  GamesSchema.statics.getAverageSubscription = async function(gamestoreId) {
+
+  
+    
+    // aggregation object
+    const obj = await this.aggregate([
+      {$match: 
+        {gamestore: gamestoreId}
+      },
+
+      {
+        $group: {
+          _id: '$gamestore',
+          averageSubscription: {$avg: "$price"}
+        }
+      }
+
+    ])
+
+
+    // aggregation query
+
+
+    try {
+      
+      await model("Gamestore").findByIdAndUpdate(gamestoreId, {
+        averageSubscription: Math.ceil(obj[0].averageSubscription / 10) * 10,
+      });
+    } catch (error) {
+      console.error(error)
+    }
+
+    
+
+    // 
+  }
+
+
+
+  // Call getAverageSubscription after save
+  GamesSchema.post("save",function(){
+    this.constructor.getAverageSubscription(this.gamestore)
+  })
+
+
+  // Calculate getAverageSubscription when removed
+  GamesSchema.pre('remove',function() {
+    this.constructor.getAverageSubscription(this.gamestore)
+  })
 
 
   const Games = model<GameDocument>('Games',GamesSchema);
