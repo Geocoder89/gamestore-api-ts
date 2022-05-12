@@ -183,15 +183,6 @@ GamestoreSchema.pre("remove", async function (next) {
   next();
 });
 // reverse populate with virtuals
-
-
-// GamestoreSchema.virtual("games", {
-//   ref: "Games",
-//   localField: "_id",
-//   foreignField: "gamestore",
-//   justOne: false,
-// });
-
 GamestoreSchema.virtual('games',{
   ref: 'Games',
   localField: "_id",

@@ -173,6 +173,7 @@ const deleteGamestore = asyncHandler(
 
     // else remove the gamestore from the db
 
+    gamestore.remove()
     res.status(200).json({
       success: true,
       data: {},
